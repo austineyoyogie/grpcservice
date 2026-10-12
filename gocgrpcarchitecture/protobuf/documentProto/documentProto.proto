@@ -1,0 +1,187 @@
+syntax = "proto3";
+
+package protobuf.documentProto;  // Protobuf Namespace
+
+option go_package = "gocgrpcarchitecture/generate/proto/documentProto";
+import "google/protobuf/timestamp.proto";
+//import "google/protobuf/wrappers.proto";
+
+
+service DocumentService {
+  rpc UploadDocument(stream UploadRequest) returns (UploadResponse);
+  rpc DownloadDocument(DownloadRequest) returns (stream DownloadResponse);
+  rpc GetDocument(GetRequest) returns (GetResponse);
+  rpc UpdateDocument(UpdateRequest) returns (UpdateResponse);
+  rpc DeleteDocument(DeleteRequest) returns (DeleteResponse);
+}
+
+message UploadRequest {
+  oneof data {
+    DocumentMetadata metadata = 1;
+    bytes chunk_data = 2;
+  }
+}
+
+message DocumentMetadata {
+  string Id = 1;
+  string Filename = 2;
+  string Title = 3;
+  uint64 Size  = 4;
+  google.protobuf.Timestamp CreatedAt = 5;
+  google.protobuf.Timestamp UpdatedAt = 6;
+}
+
+message UploadResponse {
+    DocumentMetadata Metadata = 1;
+}
+
+message DownloadRequest {
+  DocumentMetadata Metadata = 1;
+}
+
+message DownloadResponse {
+  bytes chunk_data = 1;
+}
+
+message GetRequest {
+  DocumentMetadata Metadata  = 1;
+}
+message GetResponse {
+  DocumentMetadata Metadata  = 1;
+}
+
+message UpdateRequest {
+  DocumentMetadata Metadata  = 1;
+}
+message UpdateResponse { bool success = 1; }
+
+message DeleteRequest {  DocumentMetadata Metadata  = 1; }
+message DeleteResponse { bool success = 1; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+//import "google/protobuf/timestamp.proto";
+//import "google/protobuf/wrappers.proto";
+
+service DocumentService {
+  rpc UploadDocument(stream UploadRequest) returns (UploadResponse);
+  rpc GetDocument(GetRequest) returns (DocumentResponse);
+  rpc UpdateDocument(UpdateRequest) returns (DocumentResponse);
+  rpc DeleteDocument(DeleteRequest) returns (DeleteResponse);
+}
+
+message UploadRequest {
+  oneof data {
+    Metadata metadata = 1;
+    bytes chunk = 2;
+  }
+}
+
+message Metadata {
+  string filename = 1;
+}
+
+message UploadResponse {
+  string id = 1;
+  string filename = 2;
+  int64 size = 3;
+}
+
+message GetRequest {
+  string id = 1;
+}
+
+message DocumentResponse {
+  string id = 1;
+  string filename = 2;
+  string mime_type = 3;
+  string file_path = 4;
+  int64 size = 5;
+}
+
+message UpdateRequest {
+  string id = 1;
+  string filename = 2;
+}
+
+message DeleteRequest {
+  string id = 1;
+}
+
+message DeleteResponse {
+  bool success = 1;
+}
+
+*/
+
+//service DocumentService {
+//  rpc UploadDocument(stream UploadRequest) returns (UploadResponse);
+//  rpc GetDocument(GetDocumentRequest) returns (stream GetDocumentResponse);
+//  rpc UpdateDocument(UpdateDocumentRequest) returns (UpdateDocumentResponse);
+//  rpc DeleteDocument(DeleteDocumentRequest) returns (DeleteDocumentResponse);
+//
+//}
+//
+//message UploadRequest {
+//  oneof data {
+//    Metadata metadata = 1;
+//    bytes chunk = 2;
+//  }
+//}
+//
+//message Metadata {
+//  string name   = 1;
+//  string file_type = 2;
+//}
+//
+//message UploadResponse {
+//  string id = 1;
+//  string message = 2;
+//  bool success = 3;
+//}
+//
+//// Get Message
+//message GetDocumentRequest {
+//  string id = 1;
+//}
+//
+//message GetDocumentResponse {
+//  oneof data {
+//    Metadata metadata = 1;
+//    bytes chuck = 2;
+//  }
+//}
+//// -- Update Message
+//message UpdateDocumentRequest {
+//  string id = 1;
+//  string name = 2;
+//  string file_type = 3;
+//}
+//
+//message UpdateDocumentResponse {
+//  string message = 1;
+//  bool success = 2;
+//}
+//
+//// Delete Message
+//message DeleteDocumentRequest {
+//  string id = 1;
+//}
+//message DeleteDocumentResponse {
+//  string message = 1;
+//  bool success = 2;
+//}
+
+
+

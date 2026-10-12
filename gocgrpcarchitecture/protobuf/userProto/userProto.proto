@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package protobuf.userProto; // Protobuf Namespace
+
+option go_package = "gocgrpcarchitecture/generate/proto/userProto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+//import "documentProto/documentProto.proto"; // Import model
+
+service UserService {
+  rpc AddUserToRole(CreateUserRoleRequest) returns (CreateUserRoleResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc FindUserById(FindUserByIdRequest) returns (FindUserByIdResponse);
+  rpc FindUserByEmail(FindUserByEmailRequest) returns (FindUserByEmailResponse);
+
+  rpc FindUserEmailVerification(FindUserEmailVerificationRequest) returns (FindUserEmailVerificationResponse);
+  rpc FindEmailTokenVerification(FindEmailTokenVerificationRequest) returns (FindEmailTokenVerificationResponse);
+  rpc UpdateEmailTokenVerification(UpdateEmailTokenVerificationRequest) returns (UpdateEmailTokenVerificationResponse);
+  rpc IncrementFailedLoginAttempts(IncrementFailedLoginAttemptsRequest) returns (IncrementFailedLoginAttemptsResponse);
+  rpc LastLoginTimeStamps(LastLoginTimeStampsRequest) returns (LastLoginTimeStampsResponse);
+
+  rpc IsEnabledUser(IsEnabledUserRequest) returns (IsEnabledUserResponse);
+  rpc IsDisabledUser(IsDisabledUserRequest) returns (IsDisabledUserResponse);
+  rpc GetAllUsers(GetAllUsersRequest) returns (GetAllUsersResponse);
+  rpc UpdateUserById(UpdateUserByIdRequest) returns (UpdateUserByIdResponse);
+  rpc DeleteUserById(DeleteUserByIdRequest) returns (DeleteUserByIdResponse);
+}
+
+message UserRole {
+  uint64 Id = 1;
+  uint64 UserId  = 2;
+  uint64 RoleId  = 3;
+  google.protobuf.Timestamp CreatedAt = 4;
+  google.protobuf.Timestamp UpdatedAt = 5;
+}
+
+message Role {
+  uint64 Id = 1;
+  string Name = 2;
+  string Permissions = 3;
+  google.protobuf.Timestamp CreatedAt = 4;
+  google.protobuf.Timestamp UpdatedAt = 5;
+}
+
+message User {
+  uint64 Id = 1;
+  string UUId = 2;
+  string UniqueId = 3;
+  string FirstName = 4;
+  string LastName = 5;
+  string Email = 6;
+  string Password = 7;
+  string Phone = 8;
+  string Biograph = 9;
+  string EmailToken = 10;
+  string TOTPFactorSid = 11;
+  string QrCodeSecret = 12;
+  string QrCodeImageUri = 13;
+  string QrCodeImage = 14;
+  string LastLoginDeviceName = 15;
+  string LastLoginIpAddress = 16;
+  string AccountDisabledAt = 25;
+  uint64 FailedAttempts = 17;
+  google.protobuf.BoolValue UsingMfa = 18;
+  google.protobuf.BoolValue EmailVerified = 19;
+  google.protobuf.BoolValue SMSVerified = 20;
+  google.protobuf.BoolValue SMSEnabled = 21;
+  google.protobuf.BoolValue TOTPEnabled = 22;
+  google.protobuf.BoolValue AccountEnabled = 23;
+  google.protobuf.BoolValue AccountDisabled = 24;
+  google.protobuf.BoolValue AccountNonExpired = 26;
+  google.protobuf.BoolValue AccountNonLocked = 27;
+  string LastLoginTimestamp = 28;
+  google.protobuf.Timestamp LastFailedAttemptTime = 29;
+  google.protobuf.Timestamp PasswordLastChangedAt = 30;
+  repeated Role Roles = 31;
+  google.protobuf.Timestamp CreatedAt = 33;
+  google.protobuf.Timestamp UpdatedAt = 34;
+}
+message CreateUserRoleRequest { UserRole UserRole = 1; }
+message CreateUserRoleResponse { UserRole UserRole = 1; }
+message CreateUserRequest { User User = 1; }
+message CreateUserResponse { User User = 1; }
+message FindUserByIdRequest { string UUId = 1; }
+message FindUserByIdResponse { User User = 1; }
+message FindUserByEmailRequest { User User = 1; }
+message FindUserByEmailResponse { User User = 1; }
+
+message FindEmailTokenVerificationRequest { User User = 1; }
+message FindEmailTokenVerificationResponse { User User = 1; }
+
+message UpdateEmailTokenVerificationRequest { User User = 1; }
+message UpdateEmailTokenVerificationResponse { User User = 1; }
+
+message FindUserEmailVerificationRequest { User User = 1; }
+message FindUserEmailVerificationResponse { User User = 1; }
+
+message IncrementFailedLoginAttemptsRequest { User User = 1; }
+message IncrementFailedLoginAttemptsResponse { User User = 1; }
+
+message LastLoginTimeStampsRequest { User User = 1; }
+message LastLoginTimeStampsResponse { User User = 1; }
+
+message IsEnabledUserRequest { User User = 1; }
+message IsEnabledUserResponse { User User = 1; }
+message IsDisabledUserRequest { User User = 1; }
+message IsDisabledUserResponse { User User = 1; }
+message GetAllUsersRequest { User User = 1; }
+message GetAllUsersResponse { User User = 1; }
+message UpdateUserByIdRequest { User User = 1; }
+message UpdateUserByIdResponse { User User = 1; }
+message DeleteUserByIdRequest { string UUId = 1; }
+message DeleteUserByIdResponse { bool Success = 1; }
